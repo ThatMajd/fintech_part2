@@ -19,7 +19,7 @@ df.drop(columns=['Unnamed: 0','Iron_Close'], inplace=True)
 # Fill null values with the average of previous and next rows
 df.fillna((df.shift() + df.shift(-1)) / 2, inplace=True)
 
-print(df.isnull().sum())
+# print(df.isnull().sum())
 
 # List all features
 features = df.columns.tolist()
@@ -38,7 +38,19 @@ X = scaler.fit_transform(X)
 X = X.reshape(X.shape[0], 1, X.shape[1], 1)  # Reshape to (batch_size, channels, height, width)
 
 # Train-test split
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, shuffle=False, random_state=42)
+
+
+# data = df
+# split_ratio = 0.2
+# split_index = int(len(data) * (1 - split_ratio))
+# train_data = data[:split_index]
+# test_data = data[split_index:]
+
+# X_train = train_data.drop(columns=[target])
+# y_train = train_data[[target]]
+# X_test = test_data.drop(columns=[target])
+# y_test = test_data[[target]]
 
 # Convert to PyTorch tensors
 X_train_tensor = torch.tensor(X_train, dtype=torch.float32)
@@ -47,9 +59,9 @@ y_train_tensor = torch.tensor(y_train, dtype=torch.float32).unsqueeze(1)
 y_test_tensor = torch.tensor(y_test, dtype=torch.float32).unsqueeze(1)
 
 # Create a DataLoader for batch processing
-batch_size = 64
+batch_size = 30
 train_dataset = TensorDataset(X_train_tensor, y_train_tensor)
-train_loader = DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=True)
+train_loader = DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=False)
 
 # Define the CNN model
 class CNNModel(nn.Module):
@@ -76,6 +88,7 @@ class CNNModel(nn.Module):
         self.fc2 = nn.Linear(128, 64)
         self.fc3 = nn.Linear(64, 1)
 
+
     def forward(self, x):
         x = self.relu(self.conv1(x))
         x = self.pool(x)
@@ -88,6 +101,45 @@ class CNNModel(nn.Module):
         x = self.relu(self.fc2(x))
         x = self.fc3(x)
         return x
+    
+    # def fit(self,X ,y, batch_size=10, num_epochs=200, learning_rate=0.001):
+
+    #     X = torch.tensor(X.values, dtype=torch.float32).unsqueeze(1)
+    #     y = torch.tensor(y.values, dtype=torch.float32).unsqueeze(1)
+
+    #     # Batch processing
+    #     train_dataset = TensorDataset(X, y)
+    #     train_loader = DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=False)
+
+    #     # Model, loss function, and optimizer
+    #     self.criterion = nn.MSELoss()
+    #     self.optimizer = optim.Adam(self.parameters(), lr=learning_rate)
+
+    #     # Training loop
+    #     for epoch in range(num_epochs):
+    #         self.train()
+    #         for batch_X, batch_y in train_loader:
+    #             self.optimizer.zero_grad()
+    #             outputs = self(batch_X)
+    #             loss = self.criterion(outputs, batch_y)
+    #             # train_losses.append(loss.item())
+    #             loss.backward()
+    #             self.optimizer.step()
+            
+    #         if (epoch+1) % 10 == 0:
+    #             print(f'Epoch [{epoch+1}/{num_epochs}], Loss: {loss.item():.4f}')
+    
+    # def predict(self, X):
+    #     X_tensor = torch.tensor(X, dtype=torch.float32).unsqueeze(1)
+    #     self.eval()
+    #     with torch.no_grad():
+    #         predictions = self(X_tensor)
+    #         # Save the model
+    #     model_path = 'cnn_model.pkl'
+    #     with open(model_path, 'wb') as f:
+    #         pickle.dump(self, f)
+    #     return predictions
+
 
 # Hyperparameters
 learning_rate = 0.001
@@ -130,7 +182,15 @@ plt.ylabel('Loss')
 plt.title('Training Loss')
 plt.show()
 
+
+
 # Save the model
 model_path = 'model.pkl'
 with open(model_path, 'wb') as f:
     pickle.dump(model, f)
+
+# Write MSE and MAE to a text file
+result_path = f'results_batch_size_{batch_size}.txt'
+with open(result_path, 'w') as f:
+    f.write(f'Test Loss (MSE): {test_loss.item():.4f}\n')
+    f.write(f'Test MAE: {test_mae:.4f}\n')
