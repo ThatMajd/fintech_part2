@@ -10,19 +10,28 @@ df = pd.read_csv(data_path)
 
 print('**************')
 
-df.drop(columns=['Iron_Close'], inplace=True)
+# df.drop(columns=['Iron_Close'], inplace=True)
+
+# Linear interpolation for filling missing values
+df = df.interpolate(method='linear', inplace=False)
+
+# Forward fill for any remaining NaNs at the beginning
+df = df.ffill()
+
+# Backward fill for any remaining NaNs at the end
+df = df.bfill()
 
 print('**************')
 
 # Fill null values with the average of previous and next rows
-# df.fillna((df.shift() + df.shift(-1)) / 2, inplace=True)
+# df = df.fillna((df.shift() + df.shift(-1)) / 2, inplace=True)
 
 # Delete rows with null values
-df.dropna(inplace=True)
+# df.dropna(inplace=True)
 
 print('**************')
 
-print(df['Unnamed: 0'])
+# print(df['Unnamed: 0'])
 # Rename column 'Gold_Close' to 'y'
 df.rename(columns={'Gold_Close': 'y'}, inplace=True)
 df.rename(columns={'Unnamed: 0': 'ds'}, inplace=True)
@@ -114,9 +123,10 @@ print(forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']])
 # Plot the forecast
 model.plot(forecast)
 plt.savefig('forecast_plot.png')
+plt.legend()
 plt.show()
 
 # Plot the components (including the effect of each regressor)
-model.plot_components(forecast)
-plt.savefig('forecast_reg_plot.png')
-plt.show()
+# model.plot_components(forecast)
+# plt.savefig('forecast_reg_plot.png')
+# plt.show()
