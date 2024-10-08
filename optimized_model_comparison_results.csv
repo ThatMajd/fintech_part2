@@ -1,0 +1,19 @@
+Model,MASE,RMSSE,MAE,RMSE,MAPE,SMAPE,R2,TT (Sec)
+Auto ARIMA,0.8765,0.4315,26.2672,32.5678,0.0136,0.0134,0.9946,639.28
+ARIMA,1.0199,0.5813,30.5645,43.8798,0.012,0.0119,0.9902,11.13
+Light Gradient Boosting w/ Cond. Deseasonalize & Detrending,1.2711,0.6517,38.094,49.1908,0.0153,0.0155,0.9877,0.84
+Decision Tree w/ Cond. Deseasonalize & Detrending,1.2762,0.6585,38.2452,49.7095,0.0149,0.0151,0.9874,0.73
+Random Forest w/ Cond. Deseasonalize & Detrending,1.4622,0.7496,43.8184,56.5796,0.017,0.0173,0.9837,3.53
+Extra Trees w/ Cond. Deseasonalize & Detrending,1.7902,0.8817,53.6488,66.5535,0.0209,0.0213,0.9775,1.71
+Huber w/ Cond. Deseasonalize & Detrending,1.8025,0.918,54.0181,69.2928,0.0211,0.0214,0.9756,0.66
+Gradient Boosting w/ Cond. Deseasonalize & Detrending,2.1234,1.0046,63.6361,75.8284,0.0261,0.0265,0.9707,4.38
+K Neighbors w/ Cond. Deseasonalize & Detrending,2.5083,1.2184,75.1684,91.9706,0.0292,0.0299,0.957,0.6
+Linear w/ Cond. Deseasonalize & Detrending,2.9585,1.3196,88.6605,99.607,0.0399,0.0401,0.9495,0.68
+Ridge w/ Cond. Deseasonalize & Detrending,3.1291,1.3828,93.7741,104.3818,0.0419,0.0422,0.9446,3.18
+Bayesian Ridge w/ Cond. Deseasonalize & Detrending,3.4842,1.5214,104.4158,114.8384,0.0461,0.0466,0.9329,0.59
+Lasso w/ Cond. Deseasonalize & Detrending,3.5322,1.5431,105.8539,116.4788,0.0467,0.0472,0.931,3.28
+Lasso Least Angular Regressor w/ Cond. Deseasonalize & Detrending,3.5322,1.5431,105.8548,116.4797,0.0467,0.0472,0.931,0.56
+Elastic Net w/ Cond. Deseasonalize & Detrending,3.6291,1.5917,108.7575,120.1485,0.0479,0.0485,0.9265,3.67
+AdaBoost w/ Cond. Deseasonalize & Detrending,4.5011,1.8321,134.89,138.2908,0.0602,0.0607,0.9027,1.46
+Croston,15.6617,6.3017,469.3562,475.68,0.2212,0.2171,-0.1514,0.17
+Orthogonal Matching Pursuit w/ Cond. Deseasonalize & Detrending,18.1187,7.6245,542.9883,575.53,0.2256,0.2511,-0.6855,0.63
