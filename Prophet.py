@@ -5,7 +5,7 @@ from sklearn.metrics import r2_score
 import numpy as np
 
 # Load the dataset
-data_path = 'fintech_part2//combined_ticks.csv'
+data_path = 'combined_ticks.csv'
 # data_path = 'combined_ticks.csv'
 df = pd.read_csv(data_path)
 
