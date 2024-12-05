@@ -123,7 +123,7 @@ print(forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']])
 
 # Plot the forecast
 model.plot(forecast)
-plt.savefig('forecast_plot.png')
+plt.savefig('prophet_forecast_plot.png')
 plt.legend()
 # plt.show()
 
