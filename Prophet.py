@@ -82,6 +82,9 @@ date_range = pd.date_range(end=df['ds'].max(), periods=length, freq='D')
 full_df = df.copy()
 full_df['ds'] = date_range
 
+# Save full_df to a CSV file
+full_df.to_csv('data//combined_for_ts.csv')
+
 # Fit the model
 model.fit(full_df)
 
