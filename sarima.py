@@ -3,26 +3,28 @@ import numpy as np
 import matplotlib.pyplot as plt
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 from sklearn.metrics import mean_squared_error
+import warnings
+warnings.filterwarnings("ignore")
 
 # Load the dataset (assuming 'Gold_Close' is the target and other columns are exogenous variables)
-data = pd.read_csv('combined_ticks.csv', index_col=0, parse_dates=True)
+# source = 'data//combined_ticks.csv'
+source = 'data//combined_for_ts.csv'
+data = pd.read_csv(source)
+
+# Convert the ds column to datetime format
+data['ds'] = pd.to_datetime(data['ds'])
+
+# declare ds as index
+data.set_index('ds', inplace=True)
 
 data = data.asfreq('D')
 
-# Linear interpolation for filling missing values
-data = data.interpolate(method='linear', inplace=False)
-
-# Forward fill for any remaining NaNs at the beginning
-data = data.ffill()
-
-# Backward fill for any remaining NaNs at the end
-data = data.bfill()
-
+print(data.info())
 
 
 # Define the target variable (Gold_Close) and the exogenous variables (all other columns)
-target = data['Gold_Close']
-exog = data.drop(columns=['Gold_Close'])
+target = data['y']
+exog = data.drop(columns=['y','Unnamed: 0'])
 
 print(f'exogenous ==> {exog}')
 
@@ -32,8 +34,9 @@ plt.title('Gold_Close Prices')
 plt.savefig('gold_close_prices_sarimax.png')
 plt.clf()
 
-# Train-test split (80% train, 20% test)
-train_size = int(len(target) * 0.8)
+# Train-test split
+train = 0.8
+train_size = int(len(target) * train)
 train_target, test_target = target[:train_size], target[train_size:]
 train_exog, test_exog = exog[:train_size], exog[train_size:]
 
@@ -56,3 +59,18 @@ plt.clf()
 # Evaluate the model with RMSE
 rmse_sarimax = np.sqrt(mean_squared_error(test_target, sarimax_forecast))
 print(f'SARIMAX RMSE: {rmse_sarimax}')
+
+# Evaluate the model with AIC
+aic_sarimax = sarimax_model.aic
+print(f'SARIMAX AIC: {aic_sarimax}')
+
+# Evaluate the model with BIC
+bic_sarimax = sarimax_model.bic
+print(f'SARIMAX BIC: {bic_sarimax}')
+
+# create a comparison dataframe for the actual and forecasted values
+comparison_df = pd.DataFrame({'Actual': test_target, 'Predicted': sarimax_forecast})
+# Reset the index to include sequential numbers instead of dates
+comparison_df.reset_index(drop=True, inplace=True)
+comparison_df.to_csv('sarimax_comparison.csv')
+
