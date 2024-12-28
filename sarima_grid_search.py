@@ -6,7 +6,7 @@ from sklearn.metrics import mean_squared_error
 import itertools
 
 # Load the dataset (assuming 'Gold_Close' is the target and other columns are exogenous variables)
-data = pd.read_csv('combined_ticks.csv', index_col=0, parse_dates=True)
+data = pd.read_csv('data//combined_ticks.csv', index_col=0, parse_dates=True)
 
 data = data.asfreq('D')
 

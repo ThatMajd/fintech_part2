@@ -53,7 +53,7 @@ plt.plot(test_target.index, test_target, label='Test Data')
 plt.plot(test_target.index, sarimax_forecast, label='SARIMAX Forecast')
 plt.title('SARIMAX Forecast with Exogenous Variables')
 plt.legend()
-plt.savefig('sarimax_forecast.png')
+plt.savefig('plots//sarimax_forecast.png')
 plt.clf()
 
 # Evaluate the model with RMSE
@@ -72,5 +72,5 @@ print(f'SARIMAX BIC: {bic_sarimax}')
 comparison_df = pd.DataFrame({'Actual': test_target, 'Predicted': sarimax_forecast})
 # Reset the index to include sequential numbers instead of dates
 comparison_df.reset_index(drop=True, inplace=True)
-comparison_df.to_csv('sarimax_comparison.csv')
+comparison_df.to_csv('models_comparison//sarimax_comparison.csv')
 

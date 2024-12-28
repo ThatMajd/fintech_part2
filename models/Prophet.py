@@ -112,7 +112,7 @@ print(forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']])
 
 # Plot the forecast
 model.plot(forecast)
-plt.savefig('prophet_forecast_plot.png')
+plt.savefig('plots//prophet_forecast_plot.png')
 plt.legend()
 # plt.show()
 
@@ -145,7 +145,7 @@ print('R-squared on Test:', r2)
 # Display the comparison DataFrame
 # print(comparison_df)
 
-comparison_df.to_csv('prophet_comparison.csv')
+comparison_df.to_csv('models_comparison//prophet_comparison.csv')
 
 
 # Buy - Sell Signal
