@@ -2,7 +2,7 @@ from pycaret.time_series import *
 import pandas as pd
 
 # Load the data with date as index
-df = pd.read_csv('combined_ticks.csv', parse_dates=True, index_col=0)
+df = pd.read_csv('data//combined_ticks.csv', parse_dates=True, index_col=0)
 
 # Check the first few rows
 print(df.head())
