@@ -1,4 +1,4 @@
-# **Project Title**
+# **A Fintech Project - Predicting Gold Futures price**
 
 > This project focuses on forecasting the daily price of Gold Futures by gathering historical market data via the yfinance module. After exploring potential drivers of gold prices—such as related commodities, indices, and currency exchange rates—the data is fed into both classic time series models and machine learning algorithms through PyCaret. By comparing various predictive approaches, the project aims to identify which model best captures the trends and seasonality in Gold Futures, ultimately offering reliable short-term price forecasts.
 
